@@ -1,10 +1,8 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:phonestockmgt/constant/colors.dart';
-import 'package:phonestockmgt/widgets/Settings/settings.dart';
-import 'package:phonestockmgt/widgets/homepage/Myhomepage.dart';
-import 'package:phonestockmgt/widgets/stockIn/stockIn.dart';
-import 'package:phonestockmgt/widgets/stockout/stockOut.dart';
+import 'package:phonestockmgt/widgets/Settings/myprofile/myprofile.dart';
+import 'package:phonestockmgt/widgets/homepage/myHomePageH.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   PageController _pageController =PageController();
   int _selectedIndex =0;
   List<Widget> _screens=[
-    Myhomepage(),StockIn(),StockOut(),Settings()
+    HomePageTesting(),MyProfile()
   ];
    void _onPageChanged(int index){
      setState(() {
@@ -43,10 +41,8 @@ class _HomePageState extends State<HomePage> {
        onTap: _itemTaped,
        items: [
         BottomNavigationBarItem(
-          icon: Icon(EvaIcons.home,color:_selectedIndex ==0? yellowColor:Colors.black38,),title: Text('Home',style: TextStyle(color:_selectedIndex ==0? Colors.black:Colors.black38),)),
-        BottomNavigationBarItem(icon: Icon(EvaIcons.arrowCircleLeftOutline,color: _selectedIndex ==1? yellowColor:Colors.black38,),title: Text('Stock-In',style: TextStyle(color:_selectedIndex ==1? Colors.black:Colors.black38),)),
-        BottomNavigationBarItem(icon: Icon(EvaIcons.arrowCircleRightOutline,color: _selectedIndex ==2? yellowColor:Colors.black38,),title: Text('Stock-out',style: TextStyle(color:_selectedIndex ==2? Colors.black:Colors.black38),)),
-        BottomNavigationBarItem(icon: Icon(EvaIcons.personOutline,color:_selectedIndex ==3? yellowColor:Colors.black38,),title: Text('Account',style: TextStyle(color:_selectedIndex ==3? Colors.black:Colors.black38),))
+          icon: Icon(LineAwesomeIcons.home,color:_selectedIndex ==0? skyBlue:Colors.black38,),title: Text('Home',style: TextStyle(color:_selectedIndex ==0? Colors.black:Colors.black38),)),
+        BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.user,color:_selectedIndex ==1? skyBlue:Colors.black38,),title: Text('My Account',style: TextStyle(color:_selectedIndex ==1? Colors.black:Colors.black38),))
      
       ],),
      

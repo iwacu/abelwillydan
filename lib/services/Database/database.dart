@@ -23,8 +23,8 @@ class DatabaseClient{
 
   Future create() async{
   Directory directory = await getApplicationDocumentsDirectory();
-  String database_directory= join(directory.path, 'database.db');
-  var db =await openDatabase(database_directory,version:1,onCreate:_oncreate);
+  String databaseDirectory= join(directory.path, 'database.db');
+  var db =await openDatabase(databaseDirectory,version:1,onCreate:_oncreate);
   return db;
   }
   
@@ -110,6 +110,7 @@ Future<AllPosition> assiged(AllUser user,List<AllPositionAssignment> assigned,Li
    Database mydatabase = await database;
    await mydatabase.transaction((txn) async{
     shops.forEach((shop) async{
+      print('nowwwwwwwwwwww');
       print(shop.fields.shopName);
      await txn.rawInsert('INSERT INTO AllShopsTable(shopNumber,shopName,shopSector,shopDistrict) VALUES("${shop.fields.shopCode}","${shop.fields.shopName}","${shop.fields.shopSector}","${shop.fields.shopDistrict}")');
    });
@@ -134,8 +135,7 @@ Future<AllPosition> assiged(AllUser user,List<AllPositionAssignment> assigned,Li
   Future<UserDetails> item() async{
      Database mydatabase = await database;
      List<Map<String, dynamic>> result= await mydatabase.rawQuery('SELECT * FROM UserItem');
-     List<UserDetails> items=[];
-     UserDetails ite =UserDetails();
+      UserDetails ite =UserDetails();
      result.forEach((map) {
       print(map.values);
        

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
 import 'package:phonestockmgt/services/API/apis.dart';
 import 'package:phonestockmgt/services/Authentication/wrapper.dart';
@@ -83,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Text(
         'Create\nAccount',
         style: TextStyle(
-            color: Colors.white, fontFamily: 'Montserrat', fontSize: 40),
+            color: Colors.black45, fontWeight: FontWeight.w300,fontFamily: 'Montserrat', fontSize: 40),
       ),
     ),
   ),
@@ -106,9 +108,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.white)),
+                                          BorderSide(color: Colors.black45)),
                                   labelText: 'Email',
-                                  labelStyle: TextStyle(color: Colors.white)),
+                                  labelStyle: TextStyle(color: Colors.black45)),
                             ),
                             SizedBox(
                               height: 15,
@@ -122,9 +124,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.white)),
+                                          BorderSide(color: Colors.black45)),
                                   labelText: 'Firstname',
-                                  labelStyle: TextStyle(color: Colors.white)),
+                                  labelStyle: TextStyle(color: Colors.black45)),
                             ),
                              SizedBox(
                               height: 15,
@@ -138,9 +140,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.white)),
+                                          BorderSide(color: Colors.black45)),
                                   labelText: 'Lastname',
-                                  labelStyle: TextStyle(color: Colors.white)),
+                                  labelStyle: TextStyle(color: Colors.black45)),
                             ),
                             SizedBox(
                               height: 15,
@@ -155,9 +157,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.white)),
+                                          BorderSide(color: Colors.black45)),
                                   labelText: 'Password',
-                                  labelStyle: TextStyle(color: Colors.white)),
+                                  labelStyle: TextStyle(color: Colors.black45)),
                             ),
                             SizedBox(
                               height: 15,
@@ -172,9 +174,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.white)),
+                                          BorderSide(color: Colors.black45)),
                                   labelText: 'Repeat Password',
-                                  labelStyle: TextStyle(color: Colors.white)),
+                                  labelStyle: TextStyle(color: Colors.black45)),
                             ),
                             SizedBox(
                               height: 25,
@@ -192,7 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Text(
                             'Sign up',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black45,
                                 fontSize: 25,
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w500),
@@ -204,14 +206,16 @@ class _SignUpPageState extends State<SignUpPage> {
                           });
                               _submit();
                             },
-                                                    child: CircleAvatar(
-                              backgroundColor: Colors.grey.shade800,
-                              radius: 40,
-                              child: Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                              ),
-                            ),
+                                                    child: Container(
+                                height: SizeConfig.heightMultiplier*8,
+                                width: SizeConfig.widthMultiplier*14,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: neumorpShadow,
+                                    color: Color(0xFFCADCED),
+                                  ),
+                                  child: Icon(LineAwesomeIcons.arrow_right,color: Colors.black45,),
+                              )
                           )
                         ],
                       ),
@@ -228,7 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Text(
             'Sign In',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black45,
               fontFamily: 'Montserrat',
               fontSize: 15,
               fontWeight: FontWeight.w500,

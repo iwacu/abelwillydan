@@ -21,3 +21,4 @@ void fromMap(Map<String, dynamic> map){
    return map;
   }
 }
+

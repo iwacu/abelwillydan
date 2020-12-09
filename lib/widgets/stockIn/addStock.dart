@@ -97,42 +97,6 @@ class _AddStockState extends State<AddStock> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.refresh, color: Colors.black),
-                    iconSize: SizeConfig.imageSizeMultiplier * 8,
-                    onPressed: () {
-                      setState(() {
-                        _barcodeText.clear();
-                        _processor = '';
-                        _ram = '';
-                        _cameraFront = '';
-                        _camerBack = '';
-                        _screenSize = '';
-                        _screenResolution = '';
-                        _batterylife = '';
-                        _batteryType = '';
-                        _os = '';
-                      });
-                    }),
-                Container(
-                  height: SizeConfig.heightMultiplier * 8,
-                  width: SizeConfig.widthMultiplier * 20,
-                  decoration: BoxDecoration(
-                      color: yellowColor,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Center(
-                      child: Text('Save',
-                          style: TextStyle(color: Colors.indigo[100]))),
-                ),
-              ],
-            ),
-          ),
-        ],
         elevation: 0.0,
         backgroundColor: Colors.grey[100],
         leading: IconButton(
@@ -149,6 +113,85 @@ class _AddStockState extends State<AddStock> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: <Widget>[
+                 Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Row(
+
+              children: <Widget>[
+                                        GestureDetector(
+                                          onTap: (){
+                                            setState(() {
+                        _barcodeText.clear();
+                        _processor = '';
+                        _ram = '';
+                        _cameraFront = '';
+                        _camerBack = '';
+                        _screenSize = '';
+                        _screenResolution = '';
+                        _batterylife = '';
+                        _batteryType = '';
+                        _os = '';
+                      });
+                                          },
+                                                                                  child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:8,
+                                                  vertical:8
+                                                ),
+                                height: SizeConfig.heightMultiplier*5,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(6),
+                                    boxShadow: neumorpShadow,
+                                    color: Color(0xFFCADCED),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.delete,color: Colors.black45,size: 5*SizeConfig.imageSizeMultiplier,),
+                                      Text(
+                                                'Clear',
+                                                style: TextStyle(
+                                                  //fontWeight: FontWeight.bold,
+                                                  fontFamily: 'Montserrat',
+                                                  color: Colors.black38,
+                                                ),
+                                              ),
+                                    ],
+                                  ),
+                              ),
+                                        ),
+                Spacer(),              
+               Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:8,
+                                                vertical:8
+                                              ),
+                                height: SizeConfig.heightMultiplier*5,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(6),
+                                    boxShadow: neumorpShadow,
+                                    color: Color(0xFFCADCED),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(LineAwesomeIcons.plus,color: Colors.black45,size: 5*SizeConfig.imageSizeMultiplier,),
+                                      Text(
+                                              'Save',
+                                              style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                fontFamily: 'Montserrat',
+                                                color: Colors.black38,
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                              ),
+                              
+              ],
+            ),
+          ),
+     
             Padding(
               padding: const EdgeInsets.only(left: 8, right: 8, top: 23),
               child: Row(

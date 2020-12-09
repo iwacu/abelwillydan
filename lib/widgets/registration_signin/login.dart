@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
-import 'package:phonestockmgt/main.dart';
 import 'package:phonestockmgt/models/apiResponse.dart';
 import 'package:phonestockmgt/models/userdetails.dart';
 import 'package:phonestockmgt/services/API/apiresponsehandl.dart';
@@ -129,7 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'Welcome\nBack',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black38,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 fontSize: 40),
                           ),
@@ -205,14 +207,17 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                                 _submit();
                               },
-                              child: CircleAvatar(
-                                backgroundColor: Colors.grey.shade800,
-                                radius: 40,
-                                child: Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                ),
+                              child: Container(
+                                height: SizeConfig.heightMultiplier*8,
+                                width: SizeConfig.widthMultiplier*14,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: neumorpShadow,
+                                    color: Color(0xFFCADCED),
+                                  ),
+                                  child: Icon(LineAwesomeIcons.arrow_right,color: Colors.black45,),
                               ),
+                            
                             )
                           ],
                         ),

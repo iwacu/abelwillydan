@@ -5,7 +5,7 @@ import 'package:phonestockmgt/models/userdetails.dart';
 import 'package:phonestockmgt/services/API/apis.dart';
 import 'package:phonestockmgt/services/Database/database.dart';
 import 'package:phonestockmgt/widgets/LoadingSpinner/loading.dart';
-import 'package:phonestockmgt/widgets/checkingPosition/positionChecking.dart';
+import 'package:phonestockmgt/widgets/OnboradingScreen/onBoardingScreen.dart';
 import 'package:phonestockmgt/widgets/homepage/homepage.dart';
 import 'package:phonestockmgt/widgets/registration_signin/login.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +58,7 @@ class WrapperPostion extends StatelessWidget {
            print('hhhhhhhhhhhhhhhhhhh${snapshot.data.positionName}');
           
            return (snapshot.data.positionName=='')?
-           WaitingPosition(firstName: snapshot.data.firstname,lastName: snapshot.data.lastname,email: snapshot.data.useremail,) : HomePage();
+           OnBoardingScreen(firstName: snapshot.data.firstname,lastName: snapshot.data.lastname,email: snapshot.data.useremail,) : HomePage();
          }
         //  else if(snapshot.data.positionName==null && snapshot.data.positionCode==null){
         //   return Scaffold(

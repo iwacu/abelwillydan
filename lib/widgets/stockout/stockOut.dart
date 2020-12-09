@@ -47,32 +47,56 @@ class _StockOutState extends State<StockOut> with AutomaticKeepAliveClientMixin{
           );
         },
         elevation: 0.0,
-        child: Icon(
-          Icons.remove,
-          color: Colors.indigo[100],
-        ),
-        backgroundColor: yellowColor,
+        child: Stack(
+                                     children: [
+                                       Center(
+                                         child: Container(
+                                           decoration: BoxDecoration(
+                                             shape: BoxShape.circle,
+                                             color: Colors.white38,
+                                           ),
+                                         ),
+                                       ),
+                                       Center(
+                                         child: Container(
+                                           margin: EdgeInsets.all(6),
+                                           decoration: BoxDecoration(
+                                             shape: BoxShape.circle,
+                                             color: Color(0xFFCADCED),
+                                           ),
+                                           child: Icon(
+                                             LineAwesomeIcons.minus,
+                                             color: skyBlue,
+                                           ),
+                                         ),
+                                       )
+                                     ],
+                                 ),
+        backgroundColor: Color(0xFFCADCED),
       ),
-      backgroundColor: Colors.grey[100],
+    //  backgroundColor: Color(0xFFCADCED),
       body: SafeArea(
         child: Container(
-            margin: const EdgeInsets.only(top: kToolbarHeight),
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+           padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Stock-Out',
-                    style: TextStyle(
-                      color: Colors.black38,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+              SizedBox(height: SizeConfig.heightMultiplier*4,),
+               Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      IconButton(
+                          icon: Icon(LineAwesomeIcons.arrow_left),
+                          onPressed: (){
+                            Navigator.pop(context);
+                          }),
+                      Text(
+                        'Stock-Out',
+                        style: kCaptionTextStyle,
+                      ),
+                      IconButton(
+                          icon: Icon(LineAwesomeIcons.search), onPressed: null),
+                    ],
                   ),
-                   IconButton(icon: Icon(LineAwesomeIcons.search), onPressed: null)
-                ],
-              ),
+                   SizedBox(height: SizeConfig.heightMultiplier*4,),
               Flexible(
                 child: ListView.builder(
                   itemCount: plo.length,
@@ -83,8 +107,8 @@ class _StockOutState extends State<StockOut> with AutomaticKeepAliveClientMixin{
                       padding: const EdgeInsets.all(16.0),
                       margin: const EdgeInsets.symmetric(vertical: 4.0),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          //color: Color(0xFFFFEBEE),
+                          boxShadow: neumorpShadow,
+                                  color: dri2,
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       child: Column(
                         children: <Widget>[

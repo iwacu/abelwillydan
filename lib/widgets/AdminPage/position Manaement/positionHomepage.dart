@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
 import 'package:phonestockmgt/models/allPositions.dart';
 
@@ -16,6 +17,7 @@ class _PositionManagementHomePageState extends State<PositionManagementHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     // backgroundColor:Color(0xFFCADCED),
       body: Column(
         children: [
               SizedBox(
@@ -50,18 +52,15 @@ class _PositionManagementHomePageState extends State<PositionManagementHomePage>
           child: Container(
                   height: SizeConfig.heightMultiplier *17,
                           
-                   decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                            ),
-                     child: Column(
+                    child: Column(
                        children: [
                                      Container(
                    height: SizeConfig.heightMultiplier *17,
                           
                    decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
+                              boxShadow: neumorpShadow,
+                              color: Colors.white38,
                             ),
                             child: Column(
                               children: <Widget>[

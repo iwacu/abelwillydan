@@ -1,516 +1,270 @@
-import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
+import 'package:phonestockmgt/constant/textsyle.dart';
 import 'package:phonestockmgt/models/userdetails.dart';
 import 'package:phonestockmgt/services/Database/database.dart';
-import 'package:provider/provider.dart';
+import 'package:phonestockmgt/widgets/AdminPage/storeManagment.dart';
+import 'package:phonestockmgt/widgets/LoadingSpinner/loading.dart';
 
-class Myhomepage extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _MyhomepageState createState() => _MyhomepageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyhomepageState extends State<Myhomepage>
+class _MyHomePageState extends State<MyHomePage>
     with AutomaticKeepAliveClientMixin {
-  //      @override
-  // void initState() {
-  //   super.initState();
-  //   BackButtonInterceptor.add(myInterceptor);
-  // }
-
-  // @override
-  // void dispose() {
-  //   BackButtonInterceptor.remove(myInterceptor);
-  //   super.dispose();
-  // }
-
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   print("BACK BUTTON!"); // Do some stuff.
-  //   return true;
-  // }
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final _userDetails=Provider.of<UserDetails>(context);
     return Scaffold(
-        body: StreamBuilder(
-     stream: DatabaseClient().item().asStream(),
+      body: StreamBuilder(
+         stream: DatabaseClient().item().asStream(),
     builder: (context, AsyncSnapshot<UserDetails>snapshot) {
-      return snapshot.data==null?CircularProgressIndicator(): Stack(
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 55, right: 0, left: 0, bottom: 0),
-              child: Column(
-                children: [
-                  SizedBox(height: SizeConfig.heightMultiplier * 1.5),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 14, right: 14),
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 30),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: whitesmoke,
-                        borderRadius: BorderRadius.circular(29.5),
-                      ),
-                      child: Stack(
-                        children: <Widget>[
-                          TextFormField(
-                            decoration: InputDecoration(
-                              icon: SvgPicture.asset("assets/icons/search.svg"),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                          Positioned(
-                              top: 12,
-                              right: 0.0,
-                              child: GestureDetector(
-                                onTap: () async{
-                                   DatabaseClient _service = DatabaseClient();
-                                await  _service.allShops();
+          return snapshot.data==null?Loading():Stack(
+            children: [
+              Container(
+                  height: SizeConfig.heightMultiplier * 59,
+                  decoration: BoxDecoration(
+                    boxShadow: neumorpShadow,
+                    color: backgroundColor,
+                  )),
+                   SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: SizeConfig.heightMultiplier*8,
+                    ),
+                 Container(
+                      height: SizeConfig.heightMultiplier*24,
+                 width: double.infinity,
+                 padding: EdgeInsets.symmetric(horizontal: 12,vertical: 12),
+                 decoration: BoxDecoration(
+                   color:Colors.white38,
+                   borderRadius: BorderRadius.all(Radius.circular(20)),
+                 ),
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   children: [
+                     Row(
+                       children: [
+                         Text('Hello',style: kSmallTextStyle,),
+                         SizedBox(width:SizeConfig.widthMultiplier *2.5),
+                                            Text('${snapshot.data.firstname}',style:kSmallTitleTextStyle),
+                                            Spacer(),
+                   GestureDetector(
+                               onTap: () async {
+                                 
                                },
-                                child: Container(
-                                    height: 20,
-                                    child: Image.asset(
-                                        'assets/images/barcodeScanner.png')),
-                              ))
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 0, right: 10, left: 10, bottom: 0),
-                    child: Container(
-                      height: SizeConfig.heightMultiplier * 20,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: whitesmoke,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 15, right: 10, left: 10, bottom: 0),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Today 2,October,2020',
-                                    style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        color: Colors.black38,
-                                        fontSize:
-                                            SizeConfig.textMultiplier * 2.2)),
-                                Text('Announcement',
-                                    style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            SizeConfig.textMultiplier * 1.5)),
-                              ],
-                            ),
-                            SizedBox(
-                              height: SizeConfig.heightMultiplier * 4,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                    'To All emplyees , we have a meeting at 2PM, everyone must at......',
-                                    style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            SizeConfig.textMultiplier * 1.5)),
-                              ],
-                            ),
-                            SizedBox(
-                              height: SizeConfig.heightMultiplier * 2,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: Text('17 Announcement today',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.black45,
-                                          fontSize:
-                                              SizeConfig.textMultiplier * 1.5)),
-                                ),
-                                Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: yellowColor,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Icon(LineAwesomeIcons.bell),
-                                          SizedBox(
-                                            width: SizeConfig.widthMultiplier *
-                                                0.4,
-                                          ),
-                                          Text('View all',
-                                              style: TextStyle(
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: SizeConfig
-                                                          .textMultiplier *
-                                                      1.5)),
-                                        ],
-                                      ),
-                                    )),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10, right: 10, top: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               child: Container(
+                                 height: 50,
+                                 width: 50,
+                                 decoration: BoxDecoration(
+                                     shape: BoxShape.circle,
+                                     boxShadow: neumorpShadow,
+                                     color: Color(0xFFCADCED),
+                                 ),
+                                 child: Stack(
+                                     children: [
+                                       Center(
+                                         child: Container(
+                                           decoration: BoxDecoration(
+                                             shape: BoxShape.circle,
+                                             color: Colors.white38,
+                                           ),
+                                         ),
+                                       ),
+                                       Center(
+                                         child: Container(
+                                           margin: EdgeInsets.all(6),
+                                           decoration: BoxDecoration(
+                                             shape: BoxShape.circle,
+                                             color: Color(0xFFCADCED),
+                                           ),
+                                           child: Icon(
+                                             LineAwesomeIcons.bell_1,
+                                             color: skyBlue,
+                                           ),
+                                         ),
+                                       )
+                                     ],
+                                 ),
+                               ),
+                             ),
+                       ],
+                     ),
+                   Spacer(),
+                    Row(
                       children: [
-                        Text('Store details',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Row(
-                          children: [
-                            Text('view more',
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.black38,
-                                    fontSize: SizeConfig.textMultiplier * 2.2)),
-                            SizedBox(
-                              width: SizeConfig.widthMultiplier * 1,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: yellowColor,
-                              ),
-                              child: Icon(EvaIcons.arrowIosForward),
-                            ),
-                          ],
-                        ),
+                        Text('Welcome Back',style:kSmallTitleTextStyle),
+                        SizedBox(width: SizeConfig.widthMultiplier*3),
+                        Icon(LineAwesomeIcons.thumbs_up_1,color: skyBlue,),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: whitesmoke,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 20,
-                                child: Image.asset('assets/images/in.png',
-                                    color: skyBlue),
-                              ),
-                              SizedBox(
-                                height: SizeConfig.heightMultiplier * 4,
-                              ),
-                              Text('Stock-In',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.black38,
-                                      fontSize:
-                                          SizeConfig.textMultiplier * 2.2)),
-                              SizedBox(
-                                height: SizeConfig.heightMultiplier * 2,
-                              ),
-                              Row(
-                                children: [
-                                  Text('32',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              SizeConfig.textMultiplier * 2.2)),
-                                  SizedBox(
-                                      width: SizeConfig.widthMultiplier * 1),
-                                  Text('pcs',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.black38,
-                                          fontSize:
-                                              SizeConfig.textMultiplier * 2.2))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: whitesmoke,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 20,
-                                child: Image.asset(
-                                  'assets/images/out.png',
-                                  color: Colors.lightGreen,
-                                ),
-                              ),
-                              SizedBox(
-                                height: SizeConfig.heightMultiplier * 4,
-                              ),
-                              Text('Stock-out',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.black38,
-                                      fontSize:
-                                          SizeConfig.textMultiplier * 2.2)),
-                              SizedBox(
-                                height: SizeConfig.heightMultiplier * 2,
-                              ),
-                              Row(
-                                children: [
-                                  Text('12',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              SizeConfig.textMultiplier * 2.2)),
-                                  SizedBox(
-                                      width: SizeConfig.widthMultiplier * 1),
-                                  Text('pcs',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.black38,
-                                          fontSize:
-                                              SizeConfig.textMultiplier * 2.2))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: whitesmoke,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 20,
-                                child: Image.asset('assets/images/return.png',
-                                    color: Colors.redAccent),
-                              ),
-                              SizedBox(
-                                height: SizeConfig.heightMultiplier * 4,
-                              ),
-                              Text('Returned',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.black38,
-                                      fontSize:
-                                          SizeConfig.textMultiplier * 2.2)),
-                              SizedBox(
-                                height: SizeConfig.heightMultiplier * 2,
-                              ),
-                              Row(
-                                children: [
-                                  Text('2',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              SizeConfig.textMultiplier * 2.2)),
-                                  SizedBox(
-                                      width: SizeConfig.widthMultiplier * 1),
-                                  Text('pcs',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.black38,
-                                          fontSize:
-                                              SizeConfig.textMultiplier * 2.2))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10, right: 10, top: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Sales',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Row(
-                          children: [
-                            Text('view All',
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.black38,
-                                    fontSize: SizeConfig.textMultiplier * 2.2)),
-                            SizedBox(
-                              width: SizeConfig.widthMultiplier * 1,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: yellowColor,
-                              ),
-                              child: Icon(EvaIcons.arrowIosForward),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 20,
-                    child: ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, bottom: 8),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: whitesmoke,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Icon(LineAwesomeIcons.mobile_phone),
-                                    Column(
-                                      children: [
-                                        Row(
+                   Spacer(),
+                    Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Imei :',
-                                                style: TextStyle(
-                                                    fontFamily: 'Montserrat',
-                                                    color: Colors.black38,
-                                                    fontSize: SizeConfig
-                                                            .textMultiplier *
-                                                        2.2)),
-                                            Text(' 1203992884838383',
-                                                style: TextStyle(
-                                                    fontFamily: 'Montserrat',
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: SizeConfig
-                                                            .textMultiplier *
-                                                        2.2)),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                SizeConfig.heightMultiplier *
-                                                    1.2),
-                                        Text('Sold bY :Rutayisire',
-                                            style: TextStyle(
-                                                fontFamily: 'Montserrat',
-                                                color: Colors.black38,
-                                                fontSize:
-                                                    SizeConfig.textMultiplier *
-                                                        2.2)),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 20,
-                                      child: Image.asset(
-                                        'assets/images/out.png',
-                                        color: Colors.lightGreen,
-                                      ),
-                                    ),
-                                  ],
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  '${snapshot.data.positionName}',
+                                                  style:kSmallTitleTextStyle
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      height: SizeConfig
+                                                              .heightMultiplier *
+                                                          4,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        boxShadow: neumorpShadow,
+                                                        color: backgroundColor,
+                                                      ),
+                                                      child: Icon(
+                                                        LineAwesomeIcons
+                                                            .crosshairs,
+                                                        color: skyBlue,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: SizeConfig
+                                                              .widthMultiplier *
+                                                          1.2,
+                                                    ),
+                                                    Text(
+                                                      'My Position',
+                                                      style: kSmallTextStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              color: Colors.white,
+                                              width: 0.2,
+                                              height:
+                                                  SizeConfig.heightMultiplier * 5,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  'Kanombe',
+                                                  style: kSmallTitleTextStyle
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      height: SizeConfig
+                                                              .heightMultiplier *
+                                                          4,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        boxShadow: neumorpShadow,
+                                                        color: backgroundColor,
+                                                      ),
+                                                      child: Icon(
+                                                        LineAwesomeIcons.map_pin,
+                                                        color: skyBlue,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: SizeConfig
+                                                              .widthMultiplier *
+                                                          1.2,
+                                                    ),
+                                                    Text(
+                                                      'My Shop',
+                                                      style: kSmallTextStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                   ],
+                 ),
+                    Spacer()
+                   ]),
+                 ),
+                 SizedBox(height: SizeConfig.heightMultiplier*3,),
+                Text('Categories',style:kSmallTitleTextStyle),
+                 SizedBox(height: SizeConfig.heightMultiplier*3,),
+                 Expanded(
+                                    child: GridView.count(
+                                      childAspectRatio: .85,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20,
+                     crossAxisCount: 2,
+                     children: <Widget>[
+                       CategoryCard(name:'Search Item',image:'assets/images/search.png',),
+                       CategoryCard(name:'Contact',image:'assets/images/contact.png',),
+                       CategoryCard(name:'Add Stock',image: 'assets/images/addStock.png',),
+                       CategoryCard(name:'View Stock',image: 'assets/images/stockIn.png',),
+                        CategoryCard(name:'Stock Out ',image: 'assets/images/stockOut.jpg',),
+                       CategoryCard(name:'Sales',image: 'assets/images/viewSales.png',),
+                      GestureDetector(
+                        onTap: (){
+                           Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StoreManagement(
+                               token: snapshot.data.token,
+                              )),
+                    );
+                        },
+                        child: CategoryCard(name:'Store Mangement',image: 'assets/images/storeMnagement.png',)),
+                     ],),
+                 )
+                 
+                 ],
+                              
                                 ),
+                                          ),
                               ),
-                            ),
+                            
+                              ],
                           );
-                        }),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 40, left: 18, right: 18),
-            child: Container(
-              height: SizeConfig.heightMultiplier * 8,
-              color: Colors.white,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text('Hello',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Colors.black38,
-                              fontWeight: FontWeight.bold,
-                              fontSize: SizeConfig.textMultiplier * 2.3)),
-                      SizedBox(height: SizeConfig.heightMultiplier * 1.2),
-                      Text('${snapshot.data.firstname}',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              fontSize: SizeConfig.textMultiplier * 2.2))
-                    ],
-                  ),
-                  CircleAvatar(
-                    radius: 24.0,
-                    backgroundImage: AssetImage('assets/images/no_image.png'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      );
-    }
-        ),
-      );
-  }
+        }
+      ),
+                    );
+                  }
+                
+                  @override
+                  bool get wantKeepAlive => true;
+                
+                 
+}
+
+class CategoryCard extends StatelessWidget {
+  final String name;
+  final String image;
+  const CategoryCard({
+    Key key, this.name, this.image,
+  }) : super(key: key);
 
   @override
-  bool get wantKeepAlive => true;
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(13)
+      ),
+      child: Column(
+        children: <Widget>[
+          Spacer(),
+          Image.asset(image,height: SizeConfig.heightMultiplier*12,),
+          Spacer(), 
+          Text(name,textAlign: TextAlign.center,style:kSmallTitleTextStyle,),
+        ],
+      ),
+    );
+  }
 }

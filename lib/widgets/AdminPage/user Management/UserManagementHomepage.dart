@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
 import 'package:phonestockmgt/models/allPositions.dart';
 import 'package:phonestockmgt/models/apiResponse.dart';
@@ -25,6 +26,7 @@ class _UserManagementHomePageState extends State<UserManagementHomePage> {
         .single;
     int id = idp.positionId;
     return Scaffold(
+    //  backgroundColor: Color(0xFFCADCED),
       body: Column(
         children: [
           SizedBox(
@@ -40,7 +42,7 @@ class _UserManagementHomePageState extends State<UserManagementHomePage> {
                     onPressed: () {
                       Navigator.pop(context);
                     }),
-                Text('User Management',
+                Text('Assign New Users',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         color: Colors.black,
@@ -55,20 +57,20 @@ class _UserManagementHomePageState extends State<UserManagementHomePage> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Container(
+                      child: widget.allUsers[index].positionName ==
+                                                  null?
+                                                   Container(
                         height: SizeConfig.heightMultiplier * 20,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
+                       
                         child: Column(
                           children: [
                             Container(
                               height: SizeConfig.heightMultiplier * 20,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                              ),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: neumorpShadow,
+                              color: Colors.white38,
+                        ),
                               child: Column(
                                 children: <Widget>[
                                   //FIRST_ROW
@@ -107,9 +109,6 @@ class _UserManagementHomePageState extends State<UserManagementHomePage> {
                                               const EdgeInsets.only(left: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('hhhhhhhhhhhhhh');
-                                              print(id);
-                                              //UserMenuManagement
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -124,25 +123,34 @@ class _UserManagementHomePageState extends State<UserManagementHomePage> {
                                                         )),
                                               );
                                             },
-                                            child: Container(
-                                                height:
-                                                    SizeConfig.heightMultiplier *
-                                                        3,
-                                                width:
-                                                    SizeConfig.widthMultiplier *
-                                                        12,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black),
-                                                    borderRadius: BorderRadius.all(
-                                                        Radius.circular(15.0))),
-                                                child: Center(
-                                                    child: Text('Edit',
-                                                        style: TextStyle(
-                                                            fontSize: SizeConfig
-                                                                    .textMultiplier *
-                                                                1.8)))),
-                                          ),
+                                            child: 
+                                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:8,
+                                                vertical:8
+                                              ),
+                                height: SizeConfig.heightMultiplier*5,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(6),
+                                    boxShadow: neumorpShadow,
+                                    color: Color(0xFFCADCED),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(LineAwesomeIcons.edit_1,color: Colors.black45,size: 5*SizeConfig.imageSizeMultiplier,),
+                                      Text(
+                                              'Edit',
+                                              style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                fontFamily: 'Montserrat',
+                                                color: Colors.black38,
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                              ),
+                          ),
                                         ),
                                       ],
                                     ),
@@ -159,8 +167,10 @@ class _UserManagementHomePageState extends State<UserManagementHomePage> {
                                         Column(
                                           children: <Widget>[
                                             widget.allUsers[index]
-                                                        .positionName ==
-                                                    null
+                                                        .status ==
+                                                    null || widget.allUsers[index]
+                                                        .status ==
+                                                    'innactive'
                                                 ? Container(
                                                     height: SizeConfig
                                                             .heightMultiplier *
@@ -293,7 +303,7 @@ class _UserManagementHomePageState extends State<UserManagementHomePage> {
                             ),
                           ],
                         ),
-                      ),
+                      ):Container(),
                     );
                   }))
         ],

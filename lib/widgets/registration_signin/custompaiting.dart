@@ -18,7 +18,7 @@ class BackgroundSignIn extends CustomPainter {
     blueWave.lineTo(sw, sh * 0.5);
     blueWave.quadraticBezierTo(sw * 0.5, sh * 0.45, sw * 0.2, 0);
     blueWave.close();
-    paint.color = Colors.lightBlue.shade300;
+    paint.color =  Color(0xFFCADCED);
     canvas.drawPath(blueWave, paint);
 
     Path greyWave = Path();
@@ -28,7 +28,7 @@ class BackgroundSignIn extends CustomPainter {
         sw * 0.95, sh * 0.15, sw * 0.65, sh * 0.15, sw * 0.6, sh * 0.38);
     greyWave.cubicTo(sw * 0.52, sh * 0.52, sw * 0.05, sh * 0.45, 0, sh * 0.4);
     greyWave.close();
-    paint.color = Colors.grey.shade800;
+    paint.color = Colors.white38;
     canvas.drawPath(greyWave, paint);
 
     Path yellowWave = Path();
@@ -37,7 +37,7 @@ class BackgroundSignIn extends CustomPainter {
         sw * 0.6, sh * 0.05, sw * 0.27, sh * 0.01, sw * 0.18, sh * 0.12);
     yellowWave.quadraticBezierTo(sw * 0.12, sh * 0.2, 0, sh * 0.2);
     yellowWave.close();
-    paint.color = Colors.orange.shade300;
+    paint.color = Color(0xff353151).withOpacity(.3);
     canvas.drawPath(yellowWave, paint);
   }
 
@@ -57,7 +57,7 @@ class BackgroundSignUp extends CustomPainter {
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, sw, sh));
-    paint.color = Colors.grey.shade100;
+    paint.color =Color(0xff353151).withOpacity(.3);
     canvas.drawPath(mainBackground, paint);
 
     Path blueWave = Path();
@@ -66,7 +66,7 @@ class BackgroundSignUp extends CustomPainter {
     blueWave.cubicTo(sw * 0.8, sh * 0.8, sw * 0.55, sh * 0.8, sw * 0.45, sh);
     blueWave.lineTo(0, sh);
     blueWave.close();
-    paint.color = Colors.lightBlue.shade300;
+    paint.color = Colors.white;
     canvas.drawPath(blueWave, paint);
 
     Path greyWave = Path();
@@ -74,7 +74,7 @@ class BackgroundSignUp extends CustomPainter {
     greyWave.lineTo(sw, sh * 0.3);
     greyWave.cubicTo(sw * 0.65, sh * 0.45, sw * 0.25, sh * 0.35, 0, sh * 0.5);
     greyWave.close();
-    paint.color = Colors.grey.shade800;
+    paint.color = Color(0xFFCADCED);
     canvas.drawPath(greyWave, paint);
   }
 
