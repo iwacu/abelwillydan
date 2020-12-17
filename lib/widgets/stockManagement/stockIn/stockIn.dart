@@ -3,7 +3,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
 import 'package:phonestockmgt/models/testingmodels.dart';
-import 'package:phonestockmgt/widgets/stockIn/addStock.dart';
+import 'package:phonestockmgt/widgets/stockManagement/stockIn/addStock.dart';
 
 class StockIn extends StatefulWidget {
   @override

@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:phonestockmgt/models/apiResponse.dart';
+import 'package:phonestockmgt/models/stockManagementresponse.dart';
 import 'package:phonestockmgt/services/Database/database.dart';
 
 import 'apis.dart';
 
 class ApiResponse {
-  //response from API
+  //store managementresponse from API
   Future<APIResponse<List<Person>, List<AllShopss>, List<AssingedShop>>>
       userManagement({String token}) async {
     try {
@@ -26,6 +27,31 @@ class ApiResponse {
     } catch (e) {
       return APIResponse<List<Person>, List<AllShopss>, List<AssingedShop>>(
           error: true, errorMessage: 'An error occured');
+    }
+  }
+  //stock management response api
+  Future<APIStockMgtResponse<List<AllBrands>,List<PhoneModel>,List<AllColors>,List<AllStorage>>> stockMgt({String token})async{
+    try {
+      final response = await DatabaseServiceProvider().stockAdmin(token);
+       if (response.statusCode == 200) {
+         print('hhhhhhhhhhhhhhhhhhhh${response.statusCode}');
+          String firstUpdate=response.body.replaceAll('"[', '[');
+          String secondUpdate=firstUpdate.replaceAll(']"', ']');
+     String lastUpdate=secondUpdate.replaceAll(r'\', r'');
+          List<AllBrands> allBrands = await getAllBrands(lastUpdate);
+          List<AllColors> allColors = await getAllColors(lastUpdate);
+          List<AllStorage> allStorages = await getAllStorages(lastUpdate);
+          List<PhoneModel> allPhoneSpecification =await getAllPhoneModelSpecifications(lastUpdate);
+          return APIStockMgtResponse<List<AllBrands>,List<PhoneModel>,List<AllColors>,List<AllStorage>>(
+            brands:allBrands ,phoneModel: allPhoneSpecification,colors: allColors,storages: allStorages
+          );
+       }
+       return APIStockMgtResponse<List<AllBrands>,List<PhoneModel>,List<AllColors>,List<AllStorage>>(
+          error: true, errorMessage: 'An error occured');
+    } catch (e) {
+        return APIStockMgtResponse<List<AllBrands>,List<PhoneModel>,List<AllColors>,List<AllStorage>>(
+          error: true, errorMessage: 'An error occured');
+ 
     }
   }
 
@@ -86,7 +112,34 @@ class ApiResponse {
     }
     return persons;
   }
-
+  //getting AllBrands
+  Future<List<AllBrands>> getAllBrands(String lastUpdate)async{
+     //decode  json
+     var brands = jsonDecode(lastUpdate)['brand_objects'] as List;
+     List<AllBrands> allBrands =brands.map((respJson) => AllBrands.fromJson(respJson)).toList();
+    return  allBrands;
+  }
+   //getting All phone moedl specification
+  Future<List<PhoneModel>> getAllPhoneModelSpecifications(String lastUpdate)async{
+     //decode  json
+     var modelspecifications = jsonDecode(lastUpdate)['phone_model_objects'] as List;
+     List<PhoneModel> allmodelspecifications =modelspecifications.map((respJson) => PhoneModel.fromJson(respJson)).toList();
+    return  allmodelspecifications;
+  }
+   //getting AllColors
+  Future<List<AllColors>> getAllColors(String lastUpdate)async{
+     //decode json
+     var brands = jsonDecode(lastUpdate)['color_objects'] as List;
+     List<AllColors> allBrands =brands.map((respJson) => AllColors.fromJson(respJson)).toList();
+    return  allBrands;
+  }
+   //getting AllStorages
+  Future<List<AllStorage>> getAllStorages(String lastUpdate)async{
+     //decode  json
+     var brands = jsonDecode(lastUpdate)['storage_objects'] as List;
+     List<AllStorage> allBrands =brands.map((respJson) => AllStorage.fromJson(respJson)).toList();
+    return  allBrands;
+  }
   //getting all shop assignment
   Future<List<AssingedShop>> allShopAssignment(String update) async {
     //decode all users json

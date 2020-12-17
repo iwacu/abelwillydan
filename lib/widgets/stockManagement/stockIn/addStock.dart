@@ -4,17 +4,29 @@ import 'package:flutter/services.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
+import 'package:phonestockmgt/models/stockManagementresponse.dart';
 import 'package:phonestockmgt/models/testingmodels.dart';
 
 class AddStock extends StatefulWidget {
+  final String token;
+  final List<PhoneModel> allPhoneModels;
+  final List<AllColors> allColors;
+  final List<AllStorage> allStorage;
+  const AddStock({Key key, this.token, this.allPhoneModels, this.allColors, this.allStorage}) : super(key: key);
   @override
   _AddStockState createState() => _AddStockState();
 }
 
 class _AddStockState extends State<AddStock> {
+  TextEditingController _buyingPrice = TextEditingController();
+  TextEditingController _sellingPrice = TextEditingController();
   TextEditingController _barcodeText = TextEditingController();
   String _barcode = '';
   Brand _brandd;
+  String _selectedBrand;
+  String _selectedModel;
+  String _selectedColor;
+  String _selectedStorage;
 
   List<ModelBrand> model = [
     ModelBrand(
@@ -81,7 +93,8 @@ class _AddStockState extends State<AddStock> {
 
   String _brand;
   String _modelBrand;
-
+  String _selectModel;
+  int _selectindex;
   String _processor = '';
   String _ram = '';
   String _cameraFront = '';
@@ -91,7 +104,7 @@ class _AddStockState extends State<AddStock> {
   String _batterylife = '';
   String _batteryType = '';
   String _os = '';
-
+ List<PhoneModel> models=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +124,8 @@ class _AddStockState extends State<AddStock> {
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(
+        child: 
+        Column(
           children: <Widget>[
                  Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -122,6 +136,7 @@ class _AddStockState extends State<AddStock> {
                                           onTap: (){
                                             setState(() {
                         _barcodeText.clear();
+                        models=[];
                         _processor = '';
                         _ram = '';
                         _cameraFront = '';
@@ -282,29 +297,87 @@ class _AddStockState extends State<AddStock> {
                   ),
                   Container(
                       child: DropdownButton(
-                    hint: Text('Brand-Name'),
-                    value: _brand,
+                    hint: Text('Select Brand-Name'),
+                    value: _selectedBrand,
                     onChanged: (newValue) {
                       setState(() {
-                        _brand = newValue;
+                        _selectedBrand = newValue;
                       });
-                      print(_brand);
+                      print(_selectedBrand);
                     },
-                    items: stock.map((location) {
+                    items: widget.allPhoneModels.map((location) {
                       return DropdownMenuItem(
                         onTap: () {
+                          
                           setState(() {
-                            _brandd = location;
+                           _selectedBrand = location.fields.subPhoneModelType.subPhoneModelType.brandName;
+                           _selectindex=location.fields.subPhoneModelType.primayKey;
+                           models=widget.allPhoneModels.where((element) => element.fields.subPhoneModelType.primayKey== _selectindex).toList();
                           });
                         },
-                        child: new Text(location.title),
-                        value: location.title,
+                        child: new Text(location.fields.subPhoneModelType.subPhoneModelType.brandName),
+                        value: location.fields.subPhoneModelType.subPhoneModelType.brandName,
                       );
                     }).toList(),
                   ))
                 ],
               ),
             ),
+             //model Name
+             SizedBox(height:SizeConfig.heightMultiplier*3),
+                  Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8, top: 23),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Model Name',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Container(
+                      child: DropdownButton(
+                    hint: Text('Select Model'),
+                    value: _selectedModel,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedModel= newValue;
+                      });
+                      print(_selectedModel);
+                    },
+                    items: models.map((location) {
+                      return DropdownMenuItem(
+                        onTap: () {
+                          setState(() {
+                            _selectedModel = location.fields.phoneModel;
+                             _processor = location.fields.phoneProcessor;
+                        _ram = location.fields.phoneRam;
+                        _cameraFront = location.fields.phonecfrt;
+                        _camerBack = location.fields.phonecbk;
+                        _screenSize = location.fields.phonescrnz;
+                        _screenResolution = location.fields.phoneresolution;
+                        _batterylife = location.fields.phonebtrlf;
+                        _batteryType = location.fields.phonebtrtype;
+                        _os = location.fields.phoneos;
+                          });
+                          print(location.fields.phoneos);
+                        },
+                        child: new Text(location.fields.phoneModel),
+                        value: location.fields.phoneModel,
+                      );
+                    }).toList(),
+                  ))
+                ],
+              ),
+            ),
+         SizedBox(height:SizeConfig.heightMultiplier*3),
+           
             Padding(
               padding: const EdgeInsets.only(left: 8, right: 8),
               child: Container(
@@ -636,17 +709,23 @@ class _AddStockState extends State<AddStock> {
                   Container(
                       child: DropdownButton(
                     hint: Text('Brand-Name'),
-                    value: _brand,
+                    value: _selectedStorage,
                     onChanged: (newValue) {
                       setState(() {
-                        _brand = newValue;
+                        _selectedStorage = newValue;
                       });
-                      print(_brand);
+                      print(_selectedStorage);
                     },
-                    items: stock.map((location) {
+                    items: widget.allStorage.map((location) {
                       return DropdownMenuItem(
-                        child: new Text(location.title),
-                        value: location.title,
+                         onTap: () {
+                                                  setState(() {
+                                                   _selectedStorage=location.fields.storageSize;
+                                                  });
+                                                   print(_selectedStorage);
+                                                 },
+                        child: new Text(location.fields.storageSize),
+                        value: location.fields.storageSize,
                       );
                     }).toList(),
                   ))
@@ -672,23 +751,92 @@ class _AddStockState extends State<AddStock> {
                   Container(
                       child: DropdownButton(
                     hint: Text('Brand-Name'),
-                    value: _brand,
+                    value: _selectedColor,
                     onChanged: (newValue) {
                       setState(() {
-                        _brand = newValue;
+                        _selectedColor = newValue;
                       });
-                      print(_brand);
+                      print(_selectedColor);
                     },
-                    items: stock.map((location) {
+                    items: widget.allColors.map((location) {
                       return DropdownMenuItem(
-                        child: new Text(location.title),
-                        value: location.title,
+                         onTap: () {
+                                                  setState(() {
+                                                   _selectedColor=location.fields.colorName;
+                                                  });
+                                                   print(_selectedColor);
+                                                 },
+                        child: new Text(location.fields.colorName),
+                        value: location.fields.colorName,
                       );
                     }).toList(),
                   ))
                 ],
               ),
             ),
+             SizedBox(
+                      height: SizeConfig.heightMultiplier * 3,
+                    ),
+                    Center(
+                      child: TextFormField(
+                        validator: (val) => val.isEmpty ? 'Enter Buying Price' : null,
+                         controller:_buyingPrice,
+                        decoration: InputDecoration(
+                          labelText: "Buying Price",
+                          labelStyle: TextStyle(color: Colors.black),
+                          hintText: "Enter Buying Price",
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          suffixIcon: Icon(
+                            LineAwesomeIcons.plus_square,
+                            color: Colors.black38,
+                          ),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide(color: Colors.grey[500]),
+                              gapPadding: 10),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide(color: Colors.grey[500]),
+                              gapPadding: 10),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.heightMultiplier * 3,
+                    ),
+                    Center(
+                      child: TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? 'Enter Selling Price' : null,
+                         controller: _sellingPrice,
+                        decoration: InputDecoration(
+                          labelText: "Selling Price",
+                          labelStyle: TextStyle(color: Colors.black),
+                          hintText: "Enter Selling Price",
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          suffixIcon: Icon(
+                            LineAwesomeIcons.plus_square,
+                            color: Colors.black38,
+                          ),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide(color: Colors.grey[500]),
+                              gapPadding: 10),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide(color: Colors.grey[500]),
+                              gapPadding: 10),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.heightMultiplier * 3,
+                    ),
+                    
           ],
         ),
       ),

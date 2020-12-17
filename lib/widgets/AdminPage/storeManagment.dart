@@ -45,7 +45,7 @@ class _StoreManagementState extends State<StoreManagement>with SingleTickerProvi
   void initState() {
     _fetchApi();
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
 
   _fetchApi() async {
@@ -63,6 +63,22 @@ class _StoreManagementState extends State<StoreManagement>with SingleTickerProvi
   Widget build(BuildContext context) {
      super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        title:  Center(
+          child: Text(
+                   'Store Management',
+                   style: kCaptionTextStyle,
+                 ),
+        ),
+        actions: [
+              
+               IconButton(
+                   icon: Icon(LineAwesomeIcons.bell_1), onPressed: null),
+             
+        ],
+      ),
         //backgroundColor: Color(0xFFCADCED),
         body: Builder(builder: (_) {
           if (_isLoading) {
@@ -79,22 +95,6 @@ class _StoreManagementState extends State<StoreManagement>with SingleTickerProvi
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: ListView(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconButton(
-                          icon: Icon(LineAwesomeIcons.arrow_left),
-                          onPressed: (){
-                            Navigator.pop(context);
-                          }),
-                      Text(
-                        'Store Management',
-                        style: kCaptionTextStyle,
-                      ),
-                      IconButton(
-                          icon: Icon(LineAwesomeIcons.bell_1), onPressed: null),
-                    ],
-                  ),
                   CarouselSlider(
                     items: [
                      _sliderAppBar('Position Management', LineAwesomeIcons.map_pin, 
@@ -137,18 +137,13 @@ class _StoreManagementState extends State<StoreManagement>with SingleTickerProvi
                   'Shop Management',
                     ),
                   ),
-                  Tab(
-                    child:  Text(
-                  'Phone Management',
-                    ),
-                  )
+                  
                 ]),
               SizedBox(
                 height: SizeConfig.heightMultiplier*70,
                               child: TabBarView(controller: tabController, children: [
                     _positionManagement(),
                     _shopManagement(),
-                    _phoneManagement(),
                   ]),
               ),
      
@@ -743,345 +738,6 @@ class _StoreManagementState extends State<StoreManagement>with SingleTickerProvi
                           width: SizeConfig.widthMultiplier * 3,
                         ),
                         Text('Add Shop ',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black38,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Spacer(),
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          color: grey,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  _phoneManagement() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: SizeConfig.heightMultiplier * 3,
-          ),
-          Text('Phone Management',
-              style: TextStyle(
-                fontSize: SizeConfig.textMultiplier * 2,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                color: Colors.black38,
-              )),
-          SizedBox(
-            height: SizeConfig.heightMultiplier * 1.5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 12, right: 12),
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.widthMultiplier * 4)
-                  .copyWith(bottom: SizeConfig.heightMultiplier * 2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: neumorpShadow,
-                color: Color(0xFFCADCED),
-              ),
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.widthMultiplier * 4,
-                  vertical: SizeConfig.heightMultiplier * 2),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ShopManagementHomePage(
-                                  allShops: _apiResponse.shops,
-                                  token: widget.token,
-                                )),
-                      ).then((_) {
-                        _fetchApi();
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          height: SizeConfig.heightMultiplier * 4,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: neumorpShadow,
-                            color: Color(0xFFCADCED),
-                          ),
-                          child: Icon(
-                            LineAwesomeIcons.list_ol,
-                            color: skyBlue,
-                          ),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.widthMultiplier * 3,
-                        ),
-                        Text('List of Phone',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black38,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Spacer(),
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          color: grey,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  Divider(
-                    thickness: 1,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                                //AddPhoneBrand
-                                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddPhoneBrand(
-                                  token: widget.token,
-                                )),
-                      ).then((_) {
-                        _fetchApi();
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          height: SizeConfig.heightMultiplier * 4,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: neumorpShadow,
-                            color: Color(0xFFCADCED),
-                          ),
-                          child: Icon(
-                            LineAwesomeIcons.plus,
-                            color: Colors.black38,
-                          ),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.widthMultiplier * 3,
-                        ),
-                        Text('Add Phone Brand ',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black38,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Spacer(),
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          color: grey,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  Divider(
-                    thickness: 1,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddPhoneBrandType(
-                                  token: widget.token,
-                                )),
-                      ).then((_) {
-                        _fetchApi();
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          height: SizeConfig.heightMultiplier * 4,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: neumorpShadow,
-                            color: Color(0xFFCADCED),
-                          ),
-                          child: Icon(LineAwesomeIcons.plus, color: skyBlue),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.widthMultiplier * 3,
-                        ),
-                        Text('Add Phone Brand Type',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black38,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Spacer(),
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          color: grey,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  Divider(
-                    thickness: 1,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddPhoneBrandTypeSpecifications(
-                                 token: widget.token,
-                                )),
-                      ).then((_) {
-                        _fetchApi();
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          height: SizeConfig.heightMultiplier * 4,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: neumorpShadow,
-                            color: Color(0xFFCADCED),
-                          ),
-                          child: Icon(LineAwesomeIcons.plus, color: skyBlue),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.widthMultiplier * 3,
-                        ),
-                        Text('Add specifications',
-                            //  overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black38,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Spacer(),
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          color: grey,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  Divider(
-                    thickness: 1,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddPhoneColors(
-                                 token: widget.token,
-                                )),
-                      ).then((_) {
-                        _fetchApi();
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          height: SizeConfig.heightMultiplier * 4,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: neumorpShadow,
-                            color: Color(0xFFCADCED),
-                          ),
-                          child: Icon(LineAwesomeIcons.plus, color: skyBlue),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.widthMultiplier * 3,
-                        ),
-                        Text('Add Phone Color',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black38,
-                                fontSize: SizeConfig.textMultiplier * 2.2)),
-                        Spacer(),
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          color: grey,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  Divider(
-                    thickness: 1,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddPhoneStorages(
-                                  token: widget.token,
-                                )),
-                      ).then((_) {
-                        _fetchApi();
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          height: SizeConfig.heightMultiplier * 4,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: neumorpShadow,
-                            color: Color(0xFFCADCED),
-                          ),
-                          child: Icon(LineAwesomeIcons.plus, color: skyBlue),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.widthMultiplier * 3,
-                        ),
-                        Text('Add Phone Storage',
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: Colors.black38,

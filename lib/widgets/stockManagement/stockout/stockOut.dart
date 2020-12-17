@@ -3,7 +3,8 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
 import 'package:phonestockmgt/models/testingmodels.dart';
-import 'package:phonestockmgt/widgets/stockout/removestock.dart';
+import 'package:phonestockmgt/widgets/stockManagement/stockout/removestock.dart';
+
 
 class StockOut extends StatefulWidget {
   @override

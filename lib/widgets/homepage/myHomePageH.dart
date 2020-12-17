@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:phonestockmgt/constant/colors.dart';
 import 'package:phonestockmgt/constant/sizeconfig.dart';
@@ -10,10 +9,7 @@ import 'package:phonestockmgt/models/userdetails.dart';
 import 'package:phonestockmgt/services/Database/database.dart';
 import 'package:phonestockmgt/widgets/AdminPage/storeManagment.dart';
 import 'package:phonestockmgt/widgets/LoadingSpinner/loading.dart';
-import 'package:phonestockmgt/widgets/stockIn/addStock.dart';
-import 'package:phonestockmgt/widgets/stockIn/stockIn.dart';
-import 'package:phonestockmgt/widgets/stockout/removestock.dart';
-import 'package:phonestockmgt/widgets/stockout/stockOut.dart';
+import 'package:phonestockmgt/widgets/stockManagement/stockManagement.dart';
 import 'package:provider/provider.dart';
 
 class HomePageTesting extends StatefulWidget {
@@ -211,55 +207,17 @@ class _HomePageTestingState extends State<HomePageTesting>with AutomaticKeepAliv
                          CategoryCard(name:'Contact',image:'assets/images/contact.png',),
                          GestureDetector(
                            onTap: (){
-                             Fluttertoast.showToast(
-                                        msg: "Available Soon",
-                                      );
-                    //           Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => AddStock(
-                    //           // token: snapshot.data.token,
-                    //           )),
-                    // );
-                           },
-                           child: CategoryCard(name:'Add Stock',image: 'assets/images/addStock.png',)),
-                         GestureDetector(
-                           onTap: (){
+                             print(snapshot.data.id);
                              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => StockIn(
-                              // token: snapshot.data.token,
-                              )),
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => StockManagement(
+                              token: snapshot.data.token,user: snapshot.data,
+                                )),
+                      );
                            },
-                           child: CategoryCard(name:'View Stock',image: 'assets/images/stockIn.png',)),
-                          GestureDetector(
-                            onTap: (){
-                    //            Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => OutStock(
-                    //           // token: snapshot.data.token,
-                    //           )),
-                    // );
-                    Fluttertoast.showToast(
-                                        msg: "Available Soon",
-                                      );
-                            },
-                            child: CategoryCard(name:'Stock Out ',image: 'assets/images/stockOut.jpg',)),
-                         GestureDetector(
-                           onTap: (){
-                              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => StockOut(
-                              // token: snapshot.data.token,
-                              )),
-                    );
-                           },
-                           child: CategoryCard(name:'Sales',image: 'assets/images/viewSales.png',)),
-                        GestureDetector(
+                           child: CategoryCard(name:'Stock Management',image:'assets/images/stock.png',)),
+                       GestureDetector(
                           onTap: (){
                              Navigator.push(
                         context,

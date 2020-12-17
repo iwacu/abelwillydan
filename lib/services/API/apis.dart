@@ -23,6 +23,32 @@ class DatabaseServiceProvider with ChangeNotifier {
   static const APIShopAssignment="https://stockapprealproject.herokuapp.com/adminstration/api/shop_assignment";
   static const APIShopAssignmentUpdate="https://stockapprealproject.herokuapp.com/adminstration/api/shop_assignment_update";
   static const APIUserAssignmentUpdate="https://stockapprealproject.herokuapp.com/adminstration/api/user_assignment_update_api";
+  // (pos) phone input
+  static const APIPhoneEntryType="https://stockapprealproject.herokuapp.com/stocksales/api/phone_type_entry";
+  static const APIPhoneRegBrand="https://stockapprealproject.herokuapp.com/stocksales/api/reg_brand";
+  static const APIPhoneModelInput="https://stockapprealproject.herokuapp.com/stocksales/api/reg_phone_model";
+  static const APIPhoneColor="https://stockapprealproject.herokuapp.com/stocksales/api/reg_color";
+  static const APIPhoneStorage="https://stockapprealproject.herokuapp.com/stocksales/api/reg_storage";
+  //(post) stock in
+  static const APIPhoneInput=" https://stockapprealproject.herokuapp.com/stocksales/api/product_stock_in";
+  //(post) move stock to shop
+  static const APIMoveStockToShop="https://stockapprealproject.herokuapp.com/stocksales/api/stock_to_shop";
+  //(post) move shop to shop
+  static const APIMoveShopToShop="https://stockapprealproject.herokuapp.com/stocksales/api/shop_to_shop";
+  //(post) availability product in shop
+  static const APIProductAvailableShop="https://stockapprealproject.herokuapp.com/stocksales/api/shop_product";
+  //(post) stock out
+  static const APIStockOut="https://stockapprealproject.herokuapp.com/stocksales/api/sales_product";
+
+   //(get) stock to shop
+   static const APIGetStockToShop="https://stockapprealproject.herokuapp.com/stocksales/api/get_stock_to_shop_dtls";
+   //(get) stock in product
+   static const APIGetStockIn="https://stockapprealproject.herokuapp.com/stocksales/api/viewing_stock_in_product";
+   //(get) stock sales
+   static const APIStockSales="https://stockapprealproject.herokuapp.com/stocksales/api/get_sales_details";
+  //(get)stock api's
+  static const APIStockAdmin="https://stockapprealproject.herokuapp.com/stocksales/api/stock_admin";
+
 
   static final sESSION = FlutterSession();
 
@@ -170,6 +196,86 @@ class DatabaseServiceProvider with ChangeNotifier {
         'Accept': 'application/json',
         'Authorization': 'Token $token',
       }, body:msg);
+      return response;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+   }
+   //add Phone Brnad
+   Future<http.Response> addPhoneBrand(String brandName,int phonetype,String token) async{
+    final msg = jsonEncode({"brand_name":brandName,"phone_type":phonetype});
+    try {
+      final response = await http.post(APIPhoneRegBrand, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      }, body:msg);
+      return response;
+    }catch (e) {
+      print(e.toString());
+      return null;
+    }
+   }
+   //add Phone Model Specification
+   Future<http.Response> addPhoneModelSpecifications(int user,int brandName,int phonetype,String token,
+   String phoneModel,String phoneProcessor,String phoneRam,String phonecfrt,String phonecbk,String phonescrnz
+   ,String phoneresolution,String phonebtrlf,String phonebtrtype,String phoneos) async{
+    final msg = jsonEncode({"user":user,"phone_type":phonetype,"brand":brandName,
+    "model_name":phoneModel,"processor":phoneProcessor,"ram":phoneRam,"camera_front":phonecfrt,"camera_back":phonecbk,
+    "screen_size":phonescrnz,"screen_resolution":phonescrnz,"battery_life":phonebtrlf, "battery_type":phonebtrtype,
+    "operating_system":phoneos
+    });
+    try {
+      final response = await http.post(APIPhoneModelInput, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      }, body:msg);
+      return response;
+    }catch (e) {
+      print(e.toString());
+      return null;
+    }
+   }
+   //add colors
+   Future<http.Response> addPhoneColor(String colorName,String token) async{
+    final msg = jsonEncode({"color_name":colorName,});
+    try {
+      final response = await http.post(APIPhoneColor, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      }, body:msg);
+      return response;
+    }catch (e) {
+      print(e.toString());
+      return null;
+    }
+   }
+   //add storages
+   Future<http.Response> addPhoneStorage(String storageName,String token) async{
+    final msg = jsonEncode({"storage_size":storageName,});
+    try {
+      final response = await http.post(APIPhoneStorage, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      }, body:msg);
+      return response;
+    }catch (e) {
+      print(e.toString());
+      return null;
+    }
+   }
+   //get stock admin
+   Future<http.Response> stockAdmin(String token) async{
+      try {
+      final response = await http.get(APIStockAdmin, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      });
       return response;
     } catch (e) {
       print(e.toString());
